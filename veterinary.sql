@@ -4,8 +4,9 @@ CREATE TABLE owners(
 	ownerid INT PRIMARY KEY,
 	ofirstname VARCHAR(50) NOT NULL,
 	olastname VARCHAR(50) NOT NULL,
-	address VARCHAR(15) NOT NULL,
-	email VARCHAR(100) NOT NULL
+	address VARCHAR(100) NOT NULL,
+	email VARCHAR(100) NOT NULL,
+	phone VARCHAR(15) NOT NULL
 );
 
 CREATE TABLE animals(
@@ -97,7 +98,7 @@ VALUES
 (9, 9, '2023-05-02', 'Allergy treatment'),
 (10,10, '2023-05-20', 'Eye infection');
 
-INSERT INTO doctors(doctorid, dfirstname, dlastname, specialty, phone, email)
+INSERT INTO doctors(doctorid, dfirstname, dlastname, speciality, phone, email)
 VALUES
 (1, 'Dr.Maria', 'Santos', 'General Veterinarian', '987-654-3210', 'maria@example.com'),
 (2, 'Dr.Antonio', 'Gonzales', 'Feline Specialist', '555-123-4567', 'antonio@example.com'),
@@ -139,30 +140,31 @@ ALTER TABLE invoices
 RENAME COLUMN paymentdate TO paymenttime;
 
 DELETE FROM appointments
-WHERE animal_id = 8;
+WHERE animalid = 8;
 
 UPDATE doctors
-SET dlast_name = 'Reyes-Gonzales'
-WHERE dfirst_name = 'Sofia';
+SET dlastname = 'Reyes-Gonzales'
+WHERE dfirstname = 'Sofia';
 
 SELECT DISTINCT species
 FROM animals;
 
-SELECT SUM(total_amount) AS total_sales
+SELECT SUM(totalamount) AS total_sales
 FROM invoices;
 
-SELECT COUNT(*) AS total_appointments
+SELECT COUNT(a.animalid) AS total_appointments,o.ofirstname
 FROM appointments AS a
-INNER JOIN animals AS an ON a.animal_id = an.animal_id
-INNER JOIN owners AS o ON an.owner_id = o.owner_id
-WHERE o.ofirst_name = 'Maria';
-
+INNER JOIN animals AS an ON a.animalid = an.animalid
+INNER JOIN owners AS o ON an.ownerid = o.ownerid
+WHERE o.ofirstname = 'Maria'
+group by o.ofirstname;
+ 	
 SELECT a.animalid,a.name,
-COUNT(*)AS appointment_count
-FROM animal a
-JOIN appointment ap ON
+COUNT(*)AS appointmentcount
+FROM animals a
+JOIN appointments ap ON
 a.animalid=ap.animalid
 GROUP BY a.animalid,a.name
-ORDER BY appointment_count
+ORDER BY appointmentcount
 DESC
 LIMIT 1;
