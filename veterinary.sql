@@ -163,3 +163,13 @@ WHERE animalid IN (
         WHERE ofirstname = 'Maria'
     )
 );
+
+SELECTa.animalid,a.name,
+COUNT(*)AS appointment_count
+FROM animal a
+JOIN appointment ap ON
+a.animalid=ap.animalid
+GROUP BY a.animalid,a.name
+ORDER BY appointment_count
+DESC
+LIMIT 1;
