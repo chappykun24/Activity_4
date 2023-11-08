@@ -149,4 +149,4 @@ SELECT DISTINCT species
 FROM animals;
 
 SELECT SUM(total_amount) AS total_sales
-FROM animals;
+FROM invoices;
