@@ -157,7 +157,7 @@ INNER JOIN animals AS an ON a.animal_id = an.animal_id
 INNER JOIN owners AS o ON an.owner_id = o.owner_id
 WHERE o.ofirst_name = 'Maria';
 
-SELECTa.animalid,a.name,
+SELECT a.animalid,a.name,
 COUNT(*)AS appointment_count
 FROM animal a
 JOIN appointment ap ON
